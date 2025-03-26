@@ -28,3 +28,10 @@ bin/
 
 # Air live reload
 tmp/ 
+
+.env
+
+# 데이터베이스 백업
+*.sql
+
+# 데이터베이스 백업 로그
