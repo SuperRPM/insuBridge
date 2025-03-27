@@ -8,6 +8,7 @@ import (
 	"insuBridge/internal/repository"
 	"insuBridge/internal/service"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,11 +26,27 @@ func main() {
 	// Gin 엔진 초기화
 	r := gin.Default()
 
+	// CORS 설정
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			"http://localhost:5173",      // 로컬 개발 환경
+			"http://localhost:5174",      // 로컬 개발 환경
+			"https://insubridge.com",     // 프로덕션 환경
+			"https://www.insubridge.com", // 프로덕션 환경
+		},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
+		AllowCredentials: true,
+	}))
+
 	// 라우트 설정
-	r.POST("/api/users", userHandler.CreateUser)
+	api := r.Group("/api")
+	{
+		api.POST("/users", userHandler.CreateUser)
+	}
 
 	// 서버 시작
 	if err := r.Run(":8080"); err != nil {
-		log.Fatal(err)
+		log.Fatal("Failed to start server:", err)
 	}
 }

@@ -8,28 +8,19 @@ import (
 
 type User struct {
 	gorm.Model
-	Name           string `json:"name" gorm:"not null"`
-	Phone          string `json:"phone" gorm:"not null"`
-	Location       string `json:"location"`
-	PrefferedTime  string `json:"preffered_time"`
-	MonthlyPremium int    `json:"monthly_premium"`
+	Name  string `gorm:"type:varchar(100);not null"`
+	Phone string `gorm:"type:varchar(20);uniqueIndex;not null"`
 }
 
 type UserRequest struct {
-	Name           string `json:"name" binding:"required"`
-	Phone          string `json:"phone" binding:"required"`
-	Location       string `json:"location"`
-	PrefferedTime  string `json:"preffered_time"`
-	MonthlyPremium int    `json:"monthly_premium"`
+	Name  string `json:"name" binding:"required"`
+	Phone string `json:"phone" binding:"required"`
 }
 
 type UserResponse struct {
-	ID             uint      `json:"id"`
-	CreatedAt      time.Time `json:"created_at"`
-	UpdatedAt      time.Time `json:"updated_at"`
-	Name           string    `json:"name"`
-	Phone          string    `json:"phone"`
-	Location       string    `json:"location"`
-	PrefferedTime  string    `json:"preffered_time"`
-	MonthlyPremium int       `json:"monthly_premium"`
+	ID        uint      `json:"id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Name      string    `json:"name"`
+	Phone     string    `json:"phone"`
 }
