@@ -27,8 +27,9 @@ go.work
 bin/
 
 # Air live reload
-tmp/ 
+tmp/
 
+# Environment variables
 .env
 
 # 데이터베이스 백업

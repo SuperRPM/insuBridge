@@ -10,9 +10,15 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// 환경 변수 로드
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	log.Println("Starting InsuBridge server...")
 
 	// 데이터베이스 초기화
