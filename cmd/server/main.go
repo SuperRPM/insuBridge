@@ -2,14 +2,12 @@ package main
 
 import (
 	"log"
-	"time"
 
 	"insuBridge/internal/config"
 	"insuBridge/internal/handler"
 	"insuBridge/internal/repository"
 	"insuBridge/internal/service"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -33,21 +31,20 @@ func main() {
 	// Gin 엔진 초기화
 	r := gin.Default()
 
-	// CORS 설정
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
-		AllowCredentials: false,
-		MaxAge:           12 * time.Hour,
-	}))
-
-	// OPTIONS 요청 처리
-	r.OPTIONS("/*path", func(c *gin.Context) {
+	// CORS 설정 - 모든 요청 허용
+	r.Use(func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
-		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-		c.Status(200)
+		c.Header("Access-Control-Allow-Methods", "*")
+		c.Header("Access-Control-Allow-Headers", "*")
+		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Access-Control-Max-Age", "86400") // 24시간
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
 	})
 
 	// 라우트 설정
