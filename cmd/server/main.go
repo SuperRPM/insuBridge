@@ -35,16 +35,10 @@ func main() {
 
 	// CORS 설정
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{
-			"http://localhost:5173",   // 로컬 개발 환경
-			"http://localhost:5174",   // 로컬 개발 환경
-			"http://3.139.6.169:5173", // EC2 프론트엔드
-			"http://3.139.6.169:8080", // EC2 백엔드
-			"*",
-		},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"*"},
 		AllowHeaders:     []string{"*"},
-		AllowCredentials: true,
+		AllowCredentials: false,
 		MaxAge:           12 * time.Hour,
 	}))
 
