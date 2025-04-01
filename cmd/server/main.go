@@ -35,7 +35,14 @@ func main() {
 
 	// CORS 설정
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
+		AllowOrigins: []string{
+			"http://localhost:5173",      // 로컬 개발 환경
+			"http://localhost:5174",      // 로컬 개발 환경
+			"http://3.139.6.169:5173",    // EC2 프론트엔드
+			"http://3.139.6.169:8080",    // EC2 백엔드
+			"https://insubridge.com",     // 프로덕션 환경
+			"https://www.insubridge.com", // 프로덕션 환경
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
 		AllowCredentials: true,
