@@ -31,13 +31,15 @@ func main() {
 	// Gin 엔진 초기화
 	r := gin.Default()
 
-	// CORS 설정 - 모든 요청 허용
+	// CORS 설정
 	r.Use(func(c *gin.Context) {
-		c.Header("Access-Control-Allow-Origin", "*")
-		c.Header("Access-Control-Allow-Methods", "*")
-		c.Header("Access-Control-Allow-Headers", "*")
-		c.Header("Access-Control-Allow-Credentials", "true")
-		c.Header("Access-Control-Max-Age", "86400") // 24시간
+		origin := c.Request.Header.Get("Origin")
+		if origin == "http://localhost:5173" || origin == "http://3.139.6.169:5173" {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+		}
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
