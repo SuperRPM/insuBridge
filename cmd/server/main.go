@@ -44,7 +44,7 @@ func main() {
 			"https://www.insubridge.com", // 프로덕션 환경
 		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "*/*"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
