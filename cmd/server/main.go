@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"insuBridge/internal/config"
@@ -15,6 +16,7 @@ import (
 func main() {
 	// 환경 변수 로드
 	if err := godotenv.Load(); err != nil {
+		fmt.Println(err)
 		log.Fatal("Error loading .env file")
 	}
 
