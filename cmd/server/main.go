@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"insuBridge/internal/config"
 	"insuBridge/internal/handler"
@@ -54,6 +55,12 @@ func main() {
 	// 라우트 설정
 	api := r.Group("/api")
 	{
+		api.GET("/health", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"status": "ok",
+				"time":   time.Now().Format(time.RFC3339),
+			})
+		})
 		api.POST("/users", userHandler.CreateUser)
 	}
 
